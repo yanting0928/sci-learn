@@ -24,9 +24,9 @@ grid_search_ada = GridSearchCV(ada, param_grid=param_grid, cv=10)
 
 grid_search_ada.fit(x_train, y_train)
 
-y_predict = grid_search_ada.predict(x_test)
+y_test_predict = grid_search_ada.predict(x_test)
 
-r2_score =  r2_score(y_test, y_predict)
+r2_score =r2_score(y_test, y_test_predict)
 
 print r2_score
 

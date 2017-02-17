@@ -8,11 +8,9 @@ from sklearn.utils.validation import check_random_state
 
 from sklearn.ensemble import ExtraTreesRegressor
 from sklearn.neighbors import KNeighborsRegressor
-from sklearn.linear_model import RidgeCV,Lasso,LinearRegression,ElasticNet
+from sklearn.linear_model import RidgeCV, Lasso, LinearRegression, ElasticNet
 
 from sklearn.metrics import r2_score
-
-
 
 # Load the faces datasets
 data = fetch_olivetti_faces()
@@ -25,7 +23,7 @@ test = data[targets >= 30]  # Test on independent people
 # Test on a subset of people
 n_faces = 5
 rng = check_random_state(4)
-face_ids = rng.randint(test.shape[0], size=(n_faces, ))
+face_ids = rng.randint(test.shape[0], size=(n_faces,))
 test = test[face_ids, :]
 
 n_pixels = data.shape[1]
@@ -46,11 +44,11 @@ ESTIMATORS = {
 
     "Ridge": RidgeCV(),
 
-    "Lasso" : Lasso(),
+    "Lasso": Lasso(),
 
- #   "ElasticNet_0.5": ElasticNet(alpha=100000, l1_ratio=0.001),
+    #   "ElasticNet_0.5": ElasticNet(alpha=100000, l1_ratio=0.001),
 
-#    "ElasticNet_0.1" : ElasticNet(alpha=0.0001, l1_ratio=0.01),
+    #    "ElasticNet_0.1" : ElasticNet(alpha=0.0001, l1_ratio=0.01),
 }
 
 y_test_predict = dict()
@@ -59,21 +57,18 @@ r2_scores = dict()
 for name, estimator in ESTIMATORS.items():
     estimator.fit(X_train, y_train)
     y_test_predict[name] = estimator.predict(X_test)
-    r2_scores[name] =  r2_score(y_test, y_test_predict[name])
-
-
+    r2_scores[name] = r2_score(y_test, y_test_predict[name])
 
 best_model = ""
 best_r2 = -1000000000.0
 
-for name, r2_score in  r2_scores.items():
+for name, r2_score in r2_scores.items():
     if (float(r2_score) > float(best_r2)):
         best_r2 = r2_score
         best_model = name
 
-
-print ("best model was %s  with a score of %.4f"% (best_model, best_r2))
-#print ("sorted", sorted(r2_scores[name])))
+print ("best model was %s  with a score of %.4f" % (best_model, best_r2))
+# print ("sorted", sorted(r2_scores[name])))
 
 
 # Plot the completed faces
@@ -91,7 +86,6 @@ for i in range(n_faces):
     else:
         sub = plt.subplot(n_faces, n_cols, i * n_cols + 1,
                           title="true faces")
-
 
     sub.axis("off")
     sub.imshow(true_face.reshape(image_shape),
